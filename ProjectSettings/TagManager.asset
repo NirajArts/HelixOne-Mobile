@@ -12,6 +12,10 @@ TagManager:
   - game_Tx_Valid
   - game_Tx_Invalid
   - game_Tx_Fake
+  - Explossive
+  - Trash
+  - SigVerifier
+  - SigVerifyConveyorManager
   layers:
   - Default
   - TransparentFX

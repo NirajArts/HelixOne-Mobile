@@ -8,10 +8,10 @@ public class SlotTimer : MonoBehaviour
 {
     [Header("Timer Settings")]
     [Tooltip("Stylized duration displayed in UI (milliseconds)")]
-    public float slotDuration = 400f; // Stylized duration for each slot in milliseconds, actual of 2 minutes. This is the duration that will be displayed in the UI.
+    public float slotDuration = 400; // Stylized duration for each slot in milliseconds, actual of 2 minutes. This is the duration that will be displayed in the UI.
     
     [Tooltip("Real-time duration the timer actually runs (seconds)")]
-    public float realTimeDuration = 120f; // Real-time duration for each slot in seconds, the game should run.
+    public float realTimeDuration = 150f; // Real-time duration for each slot in seconds, the game should run.
     
     [Header("UI References")]
     [Tooltip("Reference to Game_UI_Manager for timer display")]
@@ -19,6 +19,10 @@ public class SlotTimer : MonoBehaviour
     
     [Tooltip("UI text component to display the timer (fallback if no Game_UI_Manager)")]
     public TMP_Text timerText; // Reference to the UI text component to display the slotDuration as "400 ms"
+    
+    [Header("Timer Completion")]
+    [Tooltip("Enable external control for timer completion conditions")]
+    public bool allowExternalCompletion = true;
     
     [Header("Timer Control")]
     [Tooltip("Whether the timer has started")]
@@ -31,8 +35,14 @@ public class SlotTimer : MonoBehaviour
     public bool startOnPlayerTrigger = true;
     
     [Header("Timer Events")]
-    [Tooltip("Event triggered when timer completes")]
+    [Tooltip("Event triggered when timer completes (early or timeout)")]
     public UnityEvent OnTimerComplete;
+    
+    [Tooltip("Event triggered when timer times out (only on timeout, not early completion)")]
+    public UnityEvent OnTimerTimeout;
+    
+    [Tooltip("Event triggered when timer completes early (only on early completion)")]
+    public UnityEvent OnTimerEarlyComplete;
     
     [Tooltip("Event triggered when timer starts")]
     public UnityEvent OnTimerStart;
@@ -40,12 +50,47 @@ public class SlotTimer : MonoBehaviour
     [Tooltip("Event triggered every second (for UI updates)")]
     public UnityEvent<float> OnTimerUpdate;
     
+    [Header("External Control Events")]
+    [Tooltip("Function that checks if timer should complete early (return true to complete)")]
+    public System.Func<bool> CheckCompletionCondition;
+    
+    [Tooltip("Function that determines what happens when timer completes (return true to trigger level failed)")]
+    public System.Func<bool> OnTimerCompleteBehavior;
+    
     // Private variables
     private float currentRealTime;
     private float currentDisplayTime;
     private bool timerCompleted = false;
+    
+    // Add validation in editor
+    private void OnValidate()
+    {
+        // Ensure values are positive
+        if (slotDuration <= 0) slotDuration = 10f;
+        if (realTimeDuration <= 0) realTimeDuration = 10f;
+        
+        Debug.Log($"OnValidate - slotDuration={slotDuration}, realTimeDuration={realTimeDuration}");
+        
+        // Force update current values even during play mode
+        if (Application.isPlaying && timeStarted)
+        {
+            // If timer is running, update the current values proportionally
+            float progress = GetProgress();
+            currentRealTime = realTimeDuration * (1f - progress);
+            currentDisplayTime = slotDuration * (1f - progress);
+            Debug.Log($"OnValidate during play - Updated values: currentRealTime={currentRealTime}, currentDisplayTime={currentDisplayTime}");
+        }
+        else
+        {
+            currentRealTime = realTimeDuration;
+            currentDisplayTime = slotDuration;
+        }
+    }
     void Start()
     {
+        // Debug the current inspector values
+        Debug.Log($"SlotTimer Start() - Inspector values: slotDuration={slotDuration}, realTimeDuration={realTimeDuration}");
+        
         // Initialize timer values
         currentRealTime = realTimeDuration;
         currentDisplayTime = slotDuration;
@@ -66,12 +111,20 @@ public class SlotTimer : MonoBehaviour
     {
         if (timeStarted && !timerCompleted)
         {
+            // Check external completion condition if available
+            if (allowExternalCompletion && CheckCompletionCondition != null && CheckCompletionCondition())
+            {
+                Debug.Log("SlotTimer: External completion condition met - stopping timer");
+                CompleteTimerEarly();
+                return;
+            }
+            
             // Update real time
             currentRealTime -= Time.deltaTime;
             
-            // Calculate display time proportionally
+            // Calculate display time proportionally (should decrease as real time decreases)
             float timeProgress = 1f - (currentRealTime / realTimeDuration);
-            currentDisplayTime = slotDuration * (1f - timeProgress);
+            currentDisplayTime = slotDuration * (currentRealTime / realTimeDuration);
             
             // Update UI
             UpdateTimerDisplay();
@@ -88,15 +141,40 @@ public class SlotTimer : MonoBehaviour
     }
     
     /// <summary>
+    /// Force refresh timer values from inspector (useful for debugging)
+    /// </summary>
+    [ContextMenu("Force Refresh Values")]
+    public void ForceRefreshValues()
+    {
+        Debug.Log($"Force Refresh - slotDuration={slotDuration}, realTimeDuration={realTimeDuration}");
+        
+        if (!timeStarted)
+        {
+            currentRealTime = realTimeDuration;
+            currentDisplayTime = slotDuration;
+            UpdateTimerDisplay();
+            Debug.Log($"Values refreshed - currentRealTime={currentRealTime}, currentDisplayTime={currentDisplayTime}");
+        }
+        else
+        {
+            Debug.Log("Cannot refresh while timer is running. Stop timer first.");
+        }
+    }
+    
+    /// <summary>
     /// Start the timer
     /// </summary>
     public void StartTimer()
     {
+        Debug.Log($"StartTimer called - Before assignment: slotDuration={slotDuration}, realTimeDuration={realTimeDuration}");
+        
         if (!timeStarted && !timerCompleted)
         {
             timeStarted = true;
             currentRealTime = realTimeDuration;
             currentDisplayTime = slotDuration;
+            
+            Debug.Log($"StartTimer - After assignment: currentRealTime={currentRealTime}, currentDisplayTime={currentDisplayTime}");
             
             UpdateTimerDisplay();
             OnTimerStart?.Invoke();
@@ -129,7 +207,24 @@ public class SlotTimer : MonoBehaviour
     }
     
     /// <summary>
-    /// Complete the timer
+    /// Complete the timer early (called when external conditions are met)
+    /// </summary>
+    public void CompleteTimerEarly()
+    {
+        timeStarted = false;
+        timerCompleted = true;
+        
+        UpdateTimerDisplay();
+        
+        // Trigger specific events for early completion
+        OnTimerComplete?.Invoke();
+        OnTimerEarlyComplete?.Invoke();
+        
+        Debug.Log("SlotTimer completed early due to external condition!");
+    }
+    
+    /// <summary>
+    /// Complete the timer (when time expires)
     /// </summary>
     private void CompleteTimer()
     {
@@ -139,7 +234,28 @@ public class SlotTimer : MonoBehaviour
         currentDisplayTime = 0f;
         
         UpdateTimerDisplay();
+        
+        // Trigger events for timeout
         OnTimerComplete?.Invoke();
+        OnTimerTimeout?.Invoke();
+        
+        // Check if external behavior is defined for timer completion
+        bool shouldTriggerLevelFailed = true;
+        if (OnTimerCompleteBehavior != null)
+        {
+            shouldTriggerLevelFailed = OnTimerCompleteBehavior();
+        }
+        
+        // Default behavior: trigger level failed when timer reaches 0
+        if (shouldTriggerLevelFailed && Stage1Manager.Instance != null)
+        {
+            Debug.Log("SlotTimer completed - triggering level failed!");
+            Stage1Manager.Instance.LevelFailed();
+        }
+        else if (shouldTriggerLevelFailed)
+        {
+            Debug.LogError("SlotTimer: Stage1Manager.Instance not found! Cannot trigger level failed.");
+        }
         
         Debug.Log("SlotTimer completed!");
     }
@@ -150,6 +266,8 @@ public class SlotTimer : MonoBehaviour
     private void UpdateTimerDisplay()
     {
         string timerDisplayText = $"{currentDisplayTime:F0} ms";
+        
+        Debug.Log($"UpdateTimerDisplay - currentDisplayTime={currentDisplayTime}, text='{timerDisplayText}'");
         
         // Use Game_UI_Manager if available
         if (gameUIManager != null)
@@ -208,6 +326,35 @@ public class SlotTimer : MonoBehaviour
     public bool IsCompleted()
     {
         return timerCompleted;
+    }
+    
+    /// <summary>
+    /// Set external completion condition function
+    /// </summary>
+    /// <param name="condition">Function that returns true when timer should complete early</param>
+    public void SetCompletionCondition(System.Func<bool> condition)
+    {
+        CheckCompletionCondition = condition;
+    }
+    
+    /// <summary>
+    /// Set external behavior for timer completion
+    /// </summary>
+    /// <param name="behavior">Function that returns true if level should fail when timer completes</param>
+    public void SetTimerCompleteBehavior(System.Func<bool> behavior)
+    {
+        OnTimerCompleteBehavior = behavior;
+    }
+    
+    /// <summary>
+    /// Manually complete timer from external source
+    /// </summary>
+    public void ForceCompleteTimer()
+    {
+        if (timeStarted && !timerCompleted)
+        {
+            CompleteTimerEarly();
+        }
     }
     
     /// <summary>

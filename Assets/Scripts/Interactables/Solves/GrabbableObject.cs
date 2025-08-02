@@ -26,12 +26,15 @@ public class GrabbableObject : MonoBehaviour
     [Header("Haptic Feedback Parameters")]       // Mobile haptic vibration
     public float hapticIntensity = 0.25f;
     private MobileHaptics mobileHaptics;
+
+    [Header("UI Components from Stage2Manager")]
+    public Stage2Manager stage2Manager;        // Reference to Stage2Manager
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         boxRespawn = GetComponent<BoxRespawn>();
         mobileHaptics = MobileHaptics.Instance;
-
+        stage2Manager = FindObjectOfType<Stage2Manager>();
         if (rb == null)
         {
             Debug.LogWarning("Rigidbody not found on GrabbableObject.");
@@ -91,6 +94,12 @@ public class GrabbableObject : MonoBehaviour
         if (other.CompareTag("Player Hands"))
         {
             playerHand = other.transform; // Assume the "Player" has a Transform point to hold the object
+            if (stage2Manager.pickBoxGrabbableObject == null) // Check if the prefab reference is not set
+            {
+                stage2Manager.GrabBoxButton(true);
+                stage2Manager.DropBoxButton(false);
+                stage2Manager.pickBoxGrabbableObject = this;
+            }
         }
     }
 
@@ -100,6 +109,11 @@ public class GrabbableObject : MonoBehaviour
         if (other.CompareTag("Player Hands") && !isGrabbed)
         {
             playerHand = null;
+            if (stage2Manager.pickBoxGrabbableObject != null)
+            {
+                stage2Manager.GrabDropBoxButton(false);
+                stage2Manager.pickBoxGrabbableObject = null; // Clear this reference in Stage2Manager
+            }
         }
     }
 
@@ -112,10 +126,38 @@ public class GrabbableObject : MonoBehaviour
             if (isGrabbed)
             {
                 Grab();
+                
             }
             else
             {
                 Release();
+            }
+        }
+    }
+
+    public void GrabWithUIButton()
+    {
+        if (playerHand != null) // Check if the player is in range
+        {
+            isGrabbed = !isGrabbed; // Toggle the grabbed state
+
+            if (isGrabbed)
+            {
+                Grab();
+                if (stage2Manager.pickBoxGrabbableObject != null)
+                {
+                    stage2Manager.GrabBoxButton(false);
+                    stage2Manager.DropBoxButton(true);
+                }
+            }
+            else
+            {
+                Release();
+                if (stage2Manager.pickBoxGrabbableObject != null)
+                {
+                    stage2Manager.GrabBoxButton(true);
+                    stage2Manager.DropBoxButton(false);
+                }
             }
         }
     }

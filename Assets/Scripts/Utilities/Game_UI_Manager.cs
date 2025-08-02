@@ -22,6 +22,29 @@ public class Game_UI_Manager : MonoBehaviour
     [Tooltip("Text component to display total transactions available")]
     public TMP_Text totalTxAvailableText;
     
+    [Header("Level Complete Screen UI")]
+    [Tooltip("Text component to display valid transaction count on level complete")]
+    public TMP_Text levelCompleteValidTxText;
+    
+    [Tooltip("Text component to display fake transaction count on level complete")]
+    public TMP_Text levelCompleteFakeTxText;
+    
+    [Tooltip("Text component to display invalid transaction count on level complete")]
+    public TMP_Text levelCompleteInvalidTxText;
+    
+    [Header("Level Failed Screen UI")]
+    [Tooltip("Text component to display valid transaction count on level failed")]
+    public TMP_Text levelFailedValidTxText;
+    
+    [Tooltip("Text component to display fake transaction count on level failed")]
+    public TMP_Text levelFailedFakeTxText;
+    
+    [Tooltip("Text component to display invalid transaction count on level failed")]
+    public TMP_Text levelFailedInvalidTxText;
+    
+    [Tooltip("Text component to display remaining transactions on level failed")]
+    public TMP_Text levelFailedRemainingTxText;
+    
     [Header("Timer UI")]
     [Tooltip("Text component to display slot timer")]
     public TMP_Text slotTimerText;
@@ -39,6 +62,10 @@ public class Game_UI_Manager : MonoBehaviour
     
     [Tooltip("Show debug information")]
     public bool showDebugInfo = false;
+    
+    // Reference to GameLevelManager for subscribing to events
+    private GameLevelManager gameLevelManager;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +77,9 @@ public class Game_UI_Manager : MonoBehaviour
             InGame_TxManager.Instance.OnInvalidTxCollected.AddListener(OnInvalidTxCollected);
             InGame_TxManager.Instance.OnTotalTxUpdated.AddListener(OnTotalTxUpdated);
         }
+        
+        // Find and subscribe to GameLevelManager events
+        SubscribeToLevelManagerEvents();
         
         // Initialize UI with current values
         UpdateAllTransactionUI();
@@ -196,6 +226,50 @@ public class Game_UI_Manager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Update level complete screen transaction counts
+    /// </summary>
+    public void UpdateLevelCompleteUI()
+    {
+        if (InGame_TxManager.Instance != null)
+        {
+            if (levelCompleteValidTxText != null)
+                levelCompleteValidTxText.text = InGame_TxManager.Instance.validTxCount.ToString();
+            
+            if (levelCompleteFakeTxText != null)
+                levelCompleteFakeTxText.text = InGame_TxManager.Instance.fakeTxCount.ToString();
+            
+            if (levelCompleteInvalidTxText != null)
+                levelCompleteInvalidTxText.text = InGame_TxManager.Instance.invalidTxCount.ToString();
+        }
+    }
+    
+    /// <summary>
+    /// Update level failed screen transaction counts
+    /// </summary>
+    public void UpdateLevelFailedUI()
+    {
+        if (InGame_TxManager.Instance != null)
+        {
+            if (levelFailedValidTxText != null)
+                levelFailedValidTxText.text = InGame_TxManager.Instance.validTxCount.ToString();
+            
+            if (levelFailedFakeTxText != null)
+                levelFailedFakeTxText.text = InGame_TxManager.Instance.fakeTxCount.ToString();
+            
+            if (levelFailedInvalidTxText != null)
+                levelFailedInvalidTxText.text = InGame_TxManager.Instance.invalidTxCount.ToString();
+            
+            // Calculate remaining transactions
+            int collected = InGame_TxManager.Instance.totalTxCount;
+            int available = InGame_TxManager.Instance.totalTxToCollect;
+            int remaining = available - collected;
+            
+            if (levelFailedRemainingTxText != null)
+                levelFailedRemainingTxText.text = "of " + remaining.ToString();
+        }
+    }
+    
     // Event handlers for transaction collection
     private void OnValidTxCollected(int count)
     {
@@ -262,6 +336,24 @@ public class Game_UI_Manager : MonoBehaviour
         UpdateTotalAvailableUI(0);
         UpdateSlotTimer("0 ms");
         
+        // Reset level complete UI
+        if (levelCompleteValidTxText != null)
+            levelCompleteValidTxText.text = "0";
+        if (levelCompleteFakeTxText != null)
+            levelCompleteFakeTxText.text = "0";
+        if (levelCompleteInvalidTxText != null)
+            levelCompleteInvalidTxText.text = "0";
+        
+        // Reset level failed UI
+        if (levelFailedValidTxText != null)
+            levelFailedValidTxText.text = "0";
+        if (levelFailedFakeTxText != null)
+            levelFailedFakeTxText.text = "0";
+        if (levelFailedInvalidTxText != null)
+            levelFailedInvalidTxText.text = "0";
+        if (levelFailedRemainingTxText != null)
+            levelFailedRemainingTxText.text = "of 0";
+        
         if (txProgressBar != null)
         {
             txProgressBar.value = 0f;
@@ -278,9 +370,104 @@ public class Game_UI_Manager : MonoBehaviour
         }
     }
     
+    #region GameLevelManager Event Management
+    
+    /// <summary>
+    /// Subscribe to GameLevelManager events
+    /// </summary>
+    private void SubscribeToLevelManagerEvents()
+    {
+        // Find GameLevelManager in the scene
+        gameLevelManager = GetComponent<GameLevelManager>();
+        if (gameLevelManager == null)
+        {
+            gameLevelManager = FindObjectOfType<GameLevelManager>();
+        }
+        
+        // Subscribe to static events
+        GameLevelManager.OnLevelCompleted += OnLevelCompleted;
+        GameLevelManager.OnLevelFailed += OnLevelFailed;
+        GameLevelManager.OnLevelTransitionStarted += OnLevelTransitionStarted;
+        GameLevelManager.OnTeleportationProgress += OnTeleportationProgress;
+        
+        if (showDebugInfo)
+        {
+            Debug.Log("Game_UI_Manager subscribed to GameLevelManager events");
+        }
+    }
+    
+    /// <summary>
+    /// Unsubscribe from GameLevelManager events
+    /// </summary>
+    private void UnsubscribeFromLevelManagerEvents()
+    {
+        GameLevelManager.OnLevelCompleted -= OnLevelCompleted;
+        GameLevelManager.OnLevelFailed -= OnLevelFailed;
+        GameLevelManager.OnLevelTransitionStarted -= OnLevelTransitionStarted;
+        GameLevelManager.OnTeleportationProgress -= OnTeleportationProgress;
+    }
+    
+    /// <summary>
+    /// Handle level completion event from GameLevelManager
+    /// </summary>
+    private void OnLevelCompleted()
+    {
+        UpdateLevelCompleteUI();
+        
+        if (showDebugInfo)
+        {
+            Debug.Log("Level completed event received - updating UI");
+        }
+    }
+    
+    /// <summary>
+    /// Handle level failed event from GameLevelManager
+    /// </summary>
+    private void OnLevelFailed()
+    {
+        UpdateLevelFailedUI();
+        
+        if (showDebugInfo)
+        {
+            Debug.Log("Level failed event received - updating UI");
+        }
+    }
+    
+    /// <summary>
+    /// Handle level transition started event from GameLevelManager
+    /// </summary>
+    /// <param name="levelName">Name of the level being loaded</param>
+    private void OnLevelTransitionStarted(string levelName)
+    {
+        if (showDebugInfo)
+        {
+            Debug.Log($"Level transition started to: {levelName}");
+        }
+        
+        // You can add transition UI effects here if needed
+        // For example: show loading screen, disable input, etc.
+    }
+    
+    /// <summary>
+    /// Handle teleportation progress updates from GameLevelManager
+    /// </summary>
+    /// <param name="progress">Progress value from 0 to 1</param>
+    private void OnTeleportationProgress(float progress)
+    {
+        // You can add teleportation progress UI here if needed
+        // For example: update a countdown timer, progress bar, etc.
+        
+        if (showDebugInfo && progress % 0.1f < 0.02f) // Log every 10%
+        {
+            Debug.Log($"Teleportation progress: {progress * 100:F0}%");
+        }
+    }
+    
+    #endregion
+    
     private void OnDestroy()
     {
-        // Unsubscribe from events to prevent memory leaks
+        // Unsubscribe from transaction manager events to prevent memory leaks
         if (InGame_TxManager.Instance != null)
         {
             InGame_TxManager.Instance.OnValidTxCollected.RemoveListener(OnValidTxCollected);
@@ -288,5 +475,8 @@ public class Game_UI_Manager : MonoBehaviour
             InGame_TxManager.Instance.OnInvalidTxCollected.RemoveListener(OnInvalidTxCollected);
             InGame_TxManager.Instance.OnTotalTxUpdated.RemoveListener(OnTotalTxUpdated);
         }
+        
+        // Unsubscribe from GameLevelManager events to prevent memory leaks
+        UnsubscribeFromLevelManagerEvents();
     }
 }
