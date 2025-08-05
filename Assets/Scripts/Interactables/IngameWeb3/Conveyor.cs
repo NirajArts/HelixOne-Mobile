@@ -9,9 +9,12 @@ using UnityEngine;
 /// </summary>
 public class Conveyor : MonoBehaviour
 {
+    [Header("Stage2 Conveyor")]
     public float speed = 1f;
     public bool isConveyorRunning = true;
     Rigidbody rb;
+
+    public bool isBankingConveyor = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,9 +23,10 @@ public class Conveyor : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isConveyorRunning) return;
-        
+
         Vector3 pos = rb.position;
         rb.position += speed * Time.fixedDeltaTime * Vector3.left;
         rb.MovePosition(pos);
     }
+
 }

@@ -49,6 +49,14 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Trash"))
+        {
+            TakeDamage(110);
+        }
+    }
+
     // Call this function to reduce player's health
     public void TakeDamage(int damage)
     {

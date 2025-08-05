@@ -8033,6 +8033,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420115534}
   m_CullTransparentMesh: 1
+--- !u!1 &422374212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 422374214}
+  - component: {fileID: 422374213}
+  m_Layer: 0
+  m_Name: GlobalGameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &422374213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422374212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9495a0121cd3c484f85278894cc6fe2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFrameRate: 120
+  screenOrientation: 3
+--- !u!4 &422374214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422374212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -85.79582, y: 5.5293865, z: -12.68217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428297820
 GameObject:
   m_ObjectHideFlags: 0
@@ -35679,7 +35725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotDuration: 400
-  realTimeDuration: 160
+  realTimeDuration: 200
   gameUIManager: {fileID: 0}
   timerText: {fileID: 483127688}
   allowExternalCompletion: 1
@@ -35701,6 +35747,7 @@ MonoBehaviour:
   OnTimerUpdate:
     m_PersistentCalls:
       m_Calls: []
+  timeTriggerColliders: []
 --- !u!65 &1859468488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39690,6 +39737,7 @@ MonoBehaviour:
   triggerOnce: 1
   showDebug: 1
   triggerDelay: 0
+  isThisBanking: 0
 --- !u!1 &2108915371
 GameObject:
   m_ObjectHideFlags: 0
@@ -40834,3 +40882,4 @@ SceneRoots:
   - {fileID: 1241753115}
   - {fileID: 1380619739}
   - {fileID: 746329221}
+  - {fileID: 422374214}

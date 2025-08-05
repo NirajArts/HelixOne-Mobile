@@ -61,16 +61,18 @@ public class SlotTimer : MonoBehaviour
     private float currentRealTime;
     private float currentDisplayTime;
     private bool timerCompleted = false;
-    
+
+    public Collider[] timeTriggerColliders;
+
     // Add validation in editor
     private void OnValidate()
     {
         // Ensure values are positive
         if (slotDuration <= 0) slotDuration = 10f;
         if (realTimeDuration <= 0) realTimeDuration = 10f;
-        
+
         Debug.Log($"OnValidate - slotDuration={slotDuration}, realTimeDuration={realTimeDuration}");
-        
+
         // Force update current values even during play mode
         if (Application.isPlaying && timeStarted)
         {
@@ -160,26 +162,34 @@ public class SlotTimer : MonoBehaviour
             Debug.Log("Cannot refresh while timer is running. Stop timer first.");
         }
     }
-    
+
     /// <summary>
     /// Start the timer
     /// </summary>
     public void StartTimer()
     {
         Debug.Log($"StartTimer called - Before assignment: slotDuration={slotDuration}, realTimeDuration={realTimeDuration}");
-        
+
         if (!timeStarted && !timerCompleted)
         {
             timeStarted = true;
             currentRealTime = realTimeDuration;
             currentDisplayTime = slotDuration;
-            
+
             Debug.Log($"StartTimer - After assignment: currentRealTime={currentRealTime}, currentDisplayTime={currentDisplayTime}");
-            
+
             UpdateTimerDisplay();
             OnTimerStart?.Invoke();
-            
+
             Debug.Log($"SlotTimer started - Real duration: {realTimeDuration}s, Display duration: {slotDuration}ms");
+        }
+
+        foreach (Collider col in timeTriggerColliders)
+        {
+            if (col != null)
+            {
+                col.enabled = false;
+            }
         }
     }
     

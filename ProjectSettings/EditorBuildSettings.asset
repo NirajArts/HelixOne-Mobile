@@ -15,5 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/BlockBuilding/Stage3-Banking.unity
     guid: 20d481642eb51784798ee47bc1bdac65
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
+      guid: 865f1bd2ea6d948489ddac719eb96d71, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: a21b2d190fc051148be19f5d3ae494a3,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: eeb65e1f6ae163f4e8f6a0b7f6006ef3, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: c520f4d09e47f2f41b140019662f608c, type: 2}

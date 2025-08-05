@@ -17,6 +17,7 @@ public class StageEndTrigger : MonoBehaviour
     // Private variables
     private bool hasTriggered = false;
 
+    public bool isThisBanking = false;
     Stage2Manager stage2Manager;
 
     // Start is called before the first frame update
@@ -99,7 +100,7 @@ public class StageEndTrigger : MonoBehaviour
         yield return new WaitForSeconds(triggerDelay);
         TriggerLevelComplete();
     }
-    
+
     /// <summary>
     /// Call GameManager to complete the level
     /// </summary>
@@ -119,6 +120,11 @@ public class StageEndTrigger : MonoBehaviour
         else
         {
             Debug.LogError("StageEndTrigger: Stage1Manager.Instance not found! Cannot trigger level complete.");
+        }
+
+        if (isThisBanking && stage2Manager != null)
+        {
+            stage2Manager.LevelComplete();
         }
     }
     
