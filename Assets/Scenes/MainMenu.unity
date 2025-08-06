@@ -1491,6 +1491,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518788118}
   m_CullTransparentMesh: 1
+--- !u!1 &536180421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 536180423}
+  - component: {fileID: 536180422}
+  m_Layer: 0
+  m_Name: WalletManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &536180422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536180421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b3ad18a588acc4aa2997910e889182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  publicKey: 
+  walletLoginPanel: {fileID: 1762444146}
+  connectedPanel: {fileID: 2006185129}
+--- !u!4 &536180423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536180421}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639505214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,9 +1928,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1063038685}
-        m_TargetAssemblyTypeName: Solana.Unity.SDK.Web3, com.solana.unity_sdk
-        m_MethodName: LoginWithWalletAdapter
+      - m_Target: {fileID: 536180422}
+        m_TargetAssemblyTypeName: WalletManager, Assembly-CSharp
+        m_MethodName: OnConnectWalletButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2478,7 +2525,7 @@ GameObject:
   - component: {fileID: 1063038683}
   - component: {fileID: 1063038686}
   - component: {fileID: 1063038685}
-  - component: {fileID: 1063038684}
+  - component: {fileID: 1063038687}
   m_Layer: 0
   m_Name: IntegrationManager
   m_TagString: Untagged
@@ -2501,21 +2548,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1063038684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063038682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0b3ad18a588acc4aa2997910e889182, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  publicKey: 
-  walletLoginPanel: {fileID: 1762444146}
-  connectedPanel: {fileID: 2006185129}
 --- !u!114 &1063038685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2547,7 +2579,7 @@ MonoBehaviour:
   solanaWalletAdapterOptions:
     solanaMobileWalletAdapterOptions:
       identityUri: https://HelixOne.app
-      iconUri: /favicon.ico
+      iconUri: https://media.discordapp.net/attachments/1344910123813961771/1402711542121889954/AppIcon.png?ex=6894e86c&is=689396ec&hm=1e9002478c7b49b9b13a44f7f101634dfd08391a9a92184cccda44897b491368&=&format=webp&quality=lossless&width=1006&height=1006
       name: HelixOne - Solana
       keepConnectionAlive: 1
     solanaWalletAdapterWebGLOptions:
@@ -2572,6 +2604,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd7daddfbeaa44729a122a269ac8fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1063038687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063038682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99d503eb81903e1458589a349298a5a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  programId: 91juefdypagioebacMPA6w1jVqUv7fPRpqqm7D4pM2RW
+  authorityPublicKey: 
+  connectedWalletPublicKey: 
+  enableDebugLogs: 1
 --- !u!1 &1068774527
 GameObject:
   m_ObjectHideFlags: 0
@@ -5552,3 +5600,4 @@ SceneRoots:
   - {fileID: 1151677552}
   - {fileID: 2025623533}
   - {fileID: 1063038683}
+  - {fileID: 536180423}

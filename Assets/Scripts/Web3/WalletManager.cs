@@ -58,6 +58,30 @@ public class WalletManager : MonoBehaviour
     }
     
     /// <summary>
+    /// Public method to be called from UI buttons - connects wallet using LoginWalletAdapter
+    /// </summary>
+    public async void OnConnectWalletButtonClicked()
+    {
+        try
+        {
+            Debug.Log("Connecting wallet via UI button...");
+            var account = await Web3.Instance.LoginWalletAdapter();
+            if (account != null)
+            {
+                Debug.Log("Wallet connected successfully via UI button!");
+            }
+            else
+            {
+                Debug.LogError("Failed to connect wallet via UI button");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Wallet connection error via UI button: {e.Message}");
+        }
+    }
+    
+    /// <summary>
     /// Disconnect wallet
     /// </summary>
     public void DisconnectWallet()
