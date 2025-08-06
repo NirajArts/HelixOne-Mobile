@@ -259,12 +259,22 @@ public class SlotTimer : MonoBehaviour
         // Default behavior: trigger level failed when timer reaches 0
         if (shouldTriggerLevelFailed && Stage1Manager.Instance != null)
         {
-            Debug.Log("SlotTimer completed - triggering level failed!");
+            Debug.Log("SlotTimer completed - triggering level failed via Stage1Manager!");
             Stage1Manager.Instance.LevelFailed();
         }
         else if (shouldTriggerLevelFailed)
         {
-            Debug.LogError("SlotTimer: Stage1Manager.Instance not found! Cannot trigger level failed.");
+            // Look for Stage2Manager if Stage1Manager instance not found
+            Stage2Manager stage2Manager = FindObjectOfType<Stage2Manager>();
+            if (stage2Manager != null)
+            {
+                Debug.Log("SlotTimer completed - triggering level failed via Stage2Manager!");
+                stage2Manager.LevelFailed();
+            }
+            else
+            {
+                Debug.LogError("SlotTimer: Neither Stage1Manager.Instance nor Stage2Manager found! Cannot trigger level failed.");
+            }
         }
         
         Debug.Log("SlotTimer completed!");

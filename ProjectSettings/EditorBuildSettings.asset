@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: c850ee8c3b14cc8459e7e186857cf567
+  - enabled: 1
     path: Assets/Scenes/BlockBuilding/Stage1-Fetching.unity
     guid: ad1320d10560f3f44911f6b1b914d2e0
   - enabled: 1
     path: Assets/Scenes/BlockBuilding/Stage2-SigVerify.unity
-    guid: 276c9c560a76e754d8c396e95bf6bae8
+    guid: 7ae568714a190714cb62e3bc76e5735f
   - enabled: 1
     path: Assets/Scenes/BlockBuilding/Stage3-Banking.unity
     guid: 20d481642eb51784798ee47bc1bdac65

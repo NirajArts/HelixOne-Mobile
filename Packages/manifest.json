@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.solana.unity_sdk": "https://github.com/magicblock-labs/Solana.Unity-SDK.git",
     "com.unity.adaptiveperformance.google.android": "5.1.5",
     "com.unity.adaptiveperformance.samsung.android": "5.1.0",
     "com.unity.collab-proxy": "2.8.2",

@@ -1,0 +1,435 @@
+{
+  "address": "91juefdypagioebacMPA6w1jVqUv7fPRpqqm7D4pM2RW",
+  "metadata": {
+    "name": "sol_game",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "game_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  97,
+                  109,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "subscribe_monthly",
+      "discriminator": [
+        211,
+        148,
+        17,
+        41,
+        241,
+        232,
+        30,
+        134
+      ],
+      "accounts": [
+        {
+          "name": "game_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  97,
+                  109,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "subscribe_yearly",
+      "discriminator": [
+        49,
+        149,
+        53,
+        241,
+        165,
+        123,
+        112,
+        132
+      ],
+      "accounts": [
+        {
+          "name": "game_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  97,
+                  109,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_prices",
+      "discriminator": [
+        62,
+        161,
+        234,
+        136,
+        106,
+        26,
+        18,
+        160
+      ],
+      "accounts": [
+        {
+          "name": "game_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  97,
+                  109,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_monthly_price",
+          "type": "u64"
+        },
+        {
+          "name": "new_yearly_price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_progress",
+      "discriminator": [
+        135,
+        47,
+        78,
+        113,
+        27,
+        158,
+        21,
+        111
+      ],
+      "accounts": [
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_progress",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GameState",
+      "discriminator": [
+        144,
+        94,
+        208,
+        172,
+        248,
+        99,
+        134,
+        120
+      ]
+    },
+    {
+      "name": "PlayerAccount",
+      "discriminator": [
+        224,
+        184,
+        224,
+        50,
+        98,
+        72,
+        48,
+        236
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "SubscriptionExpired",
+      "msg": "Subscription has expired"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidProgress",
+      "msg": "Invalid progress value. Must be between 0 and 100"
+    },
+    {
+      "code": 6002,
+      "name": "GameNotCompleted",
+      "msg": "Game must be 100% completed to mint NFT"
+    },
+    {
+      "code": 6003,
+      "name": "NftAlreadyMinted",
+      "msg": "Completion NFT already minted for this player"
+    }
+  ],
+  "types": [
+    {
+      "name": "GameState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_players",
+            "type": "u64"
+          },
+          {
+            "name": "monthly_price",
+            "type": "u64"
+          },
+          {
+            "name": "yearly_price",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "subscription_type",
+            "type": {
+              "defined": {
+                "name": "SubscriptionType"
+              }
+            }
+          },
+          {
+            "name": "subscription_start",
+            "type": "i64"
+          },
+          {
+            "name": "subscription_end",
+            "type": "i64"
+          },
+          {
+            "name": "game_progress",
+            "type": "u8"
+          },
+          {
+            "name": "has_completion_nft",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SubscriptionType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Monthly"
+          },
+          {
+            "name": "Yearly"
+          }
+        ]
+      }
+    }
+  ]
+}

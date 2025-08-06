@@ -18,7 +18,7 @@ public class StageEndTrigger : MonoBehaviour
     private bool hasTriggered = false;
 
     public bool isThisBanking = false;
-    Stage2Manager stage2Manager;
+    public Stage2Manager stage2Manager;
 
     // Start is called before the first frame update
     void Start()
@@ -106,6 +106,7 @@ public class StageEndTrigger : MonoBehaviour
     /// </summary>
     private void TriggerLevelComplete()
     {
+        if (stage2Manager != null) stage2Manager.LevelComplete(); 
         // Check if GameManager exists
         if (Stage1Manager.Instance != null)
         {
@@ -115,7 +116,7 @@ public class StageEndTrigger : MonoBehaviour
             }
 
             Stage1Manager.Instance.LevelComplete();
-            if (stage2Manager != null) stage2Manager.LevelComplete(); // Ensure Stage2Manager is also notified
+
         }
         else
         {

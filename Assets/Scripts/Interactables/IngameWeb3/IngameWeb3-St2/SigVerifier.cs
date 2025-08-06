@@ -200,7 +200,7 @@ public class SigVerifier : MonoBehaviour
             OpenDoors();
         }
     }
-    
+
     /// <summary>
     /// Open all assigned doors
     /// </summary>
@@ -217,6 +217,7 @@ public class SigVerifier : MonoBehaviour
                 }
             }
         }
+        
     }
     
     /// <summary>

@@ -10798,8 +10798,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1483542037}
   m_HandleRect: {fileID: 1483542036}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13897,7 +13897,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1448438645}
   m_Direction: 2
   m_Value: 1.0000001
-  m_Size: 0.18971403
+  m_Size: 0.18971401
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23632,7 +23632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25.663033}
+  m_AnchoredPosition: {x: 0, y: -25.663086}
   m_SizeDelta: {x: 208.2707, y: 22.0343}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1411358267
@@ -31678,7 +31678,6 @@ GameObject:
   - component: {fileID: 1859468488}
   - component: {fileID: 1859468490}
   - component: {fileID: 1859468487}
-  - component: {fileID: 1859468489}
   m_Layer: 0
   m_Name: TimerTrigger
   m_TagString: Untagged
@@ -31714,8 +31713,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotDuration: 400
-  realTimeDuration: 500
-  gameUIManager: {fileID: 0}
+  realTimeDuration: 450
+  gameUIManager: {fileID: 1380619748}
   timerText: {fileID: 483127688}
   allowExternalCompletion: 1
   timeStarted: 0
@@ -31723,7 +31722,19 @@ MonoBehaviour:
   startOnPlayerTrigger: 1
   OnTimerComplete:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2106581506}
+        m_TargetAssemblyTypeName: EndingTrigger, Assembly-CSharp
+        m_MethodName: LevelFailed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTimerTimeout:
     m_PersistentCalls:
       m_Calls: []
@@ -31760,22 +31771,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1859468489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1859468485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32e24832be94da4aaa29a1db542e087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotTimer: {fileID: 0}
-  autoFindReferences: 1
-  showDebug: 0
-  txManager: {fileID: 0}
 --- !u!65 &1859468490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35292,6 +35287,7 @@ GameObject:
   - component: {fileID: 2106581502}
   - component: {fileID: 2106581504}
   - component: {fileID: 2106581505}
+  - component: {fileID: 2106581506}
   m_Layer: 0
   m_Name: EndTrigger
   m_TagString: Untagged
@@ -35342,7 +35338,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106581501}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a78ba82f7b1be7f43a6bc8d55bdafb20, type: 3}
   m_Name: 
@@ -35351,6 +35347,23 @@ MonoBehaviour:
   showDebug: 1
   triggerDelay: 0
   isThisBanking: 1
+  stage2Manager: {fileID: 0}
+--- !u!114 &2106581506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106581501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b330a9e7a9c0c41a895eb6bc2d90e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage2Manager: {fileID: 1380619749}
+  slotTimer: {fileID: 1859468487}
+  WinScreen: {fileID: 1330709647}
+  failedScreen: {fileID: 1850430370}
 --- !u!1 &2108915371
 GameObject:
   m_ObjectHideFlags: 0
