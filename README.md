@@ -16,7 +16,7 @@
 
 | 🎥 **HelixOne Demo** | 📦 **Download APK** |
 |:--:|:--:|
-| [![Watch Demo](https://img.shields.io/badge/Watch-Demo-red?style=for-the-badge&logo=youtube&logoColor=white)](https://your-demo-video-link.com) | [![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://your-apk-download-link.com) |
+| [![Watch Demo](https://img.shields.io/badge/Watch-Demo-red?style=for-the-badge&logo=youtube&logoColor=white)](https://drive.google.com/file/d/1qRmwNX-F_Uac12bK2OhYg6P-PRmjdvGK/view?usp=drive_link) | [![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://drive.google.com/file/d/1wb1dyCux9nqYKn-9EDOyVQJKA7FcHcRc/view?usp=drive_link) |
 
 ### 📲 Quick Access
 **Scan QR Code to Download:**
@@ -98,7 +98,7 @@
 ### 📱 **Installation**
 
 #### **Option 1: Direct APK Download**
-1. Download the latest APK: [![Download](https://img.shields.io/badge/Download-APK-blue)](https://your-apk-download-link.com)
+1. Download the latest APK: [![Download](https://img.shields.io/badge/Download-APK-blue)](https://drive.google.com/file/d/1wb1dyCux9nqYKn-9EDOyVQJKA7FcHcRc/view?usp=drive_link)
 2. Enable "Install from Unknown Sources" in Android settings
 3. Install and launch HelixOne
 4. Connect your Solana wallet to get started
@@ -217,8 +217,7 @@ We welcome contributions from the Solana community! Here's how you can help:
 ### 🙏 **Special Thanks**
 - **Solana Foundation** - For the amazing mobile stack and developer tools
 - **Unity Technologies** - For the powerful cross-platform engine
-- **Helius** - For excellent learning resources and reliable RPC infrastructure
-- **Solana Community** - For inspiration and feedback
+- **Helius** - For excellent learning resources.
 
 ---
 
@@ -227,9 +226,9 @@ We welcome contributions from the Solana community! Here's how you can help:
 ### 🎥 **Demo & Media**
 | Platform | Link | Description |
 |----------|------|-------------|
-| 🎬 **Demo Video** | [Watch Demo](https://your-demo-video-link.com) | Full gameplay walkthrough |
-| 📱 **APK Download** | [Download APK](https://your-apk-download-link.com) | Latest release build |
-| 📊 **Pitch Deck** | [View Slides](https://your-pitch-deck-link.com) | Project presentation |
+| 🎬 **Demo Video** | [Watch Demo](https://drive.google.com/file/d/1qRmwNX-F_Uac12bK2OhYg6P-PRmjdvGK/view?usp=drive_link) | Full Mobile Walkthrough|
+| 📱 **APK Download** | [Download APK](https://drive.google.com/file/d/1wb1dyCux9nqYKn-9EDOyVQJKA7FcHcRc/view?usp=drive_link) | Latest  build |
+| 📊 **Pitch Deck** | [View Slides](https://drive.google.com/file/d/1cKrlSWsRomvsJbk6gH8T0B8XwiQJ6EX-/view?usp=drive_link) | Project presentation |
 | 🐙 **Source Code** | [GitHub Repo](https://github.com/NirajArts/HelixOne-Mobile) | Open source code |
 
 ### 🌐 **Social & Community**
@@ -244,8 +243,8 @@ We welcome contributions from the Solana community! Here's how you can help:
 
 **🎮 Start Your Solana Journey Today! 🚀**
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-APK-success?style=for-the-badge&logo=android&logoColor=white)](https://your-apk-download-link.com)
+[![Download Now](https://img.shields.io/badge/Download%20Now-APK-success?style=for-the-badge&logo=android&logoColor=white)](https://drive.google.com/file/d/1wb1dyCux9nqYKn-9EDOyVQJKA7FcHcRc/view?usp=drive_link)
 
-*Made with ❤️ by [Niraj Arts](https://github.com/NirajArts) for the Solana Mobile Hackathon 2025*
+*Made with ❤️ by [Niraj Arts](https://github.com/NirajArts) & [ifeelsam](https://github.com/ifeelsam) for the Solana Mobile Hackathon 2025*
 
 </div>
