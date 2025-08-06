@@ -108,22 +108,6 @@
 2. Follow the installation prompts
 3. Launch and enjoy learning!
 
-### 🛠 **Local Development**
-
-```bash
-# Clone the repository
-git clone https://github.com/NirajArts/HelixOne-Mobile.git
-
-# Open in Unity 2022.3.62f1 or later
-# Configure Android build settings
-# Connect Android device and build
-
-# Required Unity Packages:
-# - Solana Unity SDK
-# - TextMeshPro
-# - Unity Input System
-```
-
 ---
 
 ## 🏗 **Architecture Overview**
