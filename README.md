@@ -193,8 +193,7 @@ We welcome contributions from the Solana community! Here's how you can help:
 - Share UX/UI improvement ideas
 
 ###  **Feedback**
-- **Discord**: Join our community server
-- **Twitter**: [@YourTwitterHandle](https://x.com/niraj_arts)
+- **Twitter**: [@niraj_arts](https://x.com/niraj_arts)
 - **Email**: nirajarts.official@gmail.com
 
 ---
@@ -205,6 +204,7 @@ We welcome contributions from the Solana community! Here's how you can help:
 **Niraj Arts** - *Project Lead & Developer*
 - 🐙 GitHub: [@NirajArts](https://github.com/NirajArts)
 - 🐦 Twitter: [@niraj_arts](https://twitter.com/YourTwitter)
+- 📄 Unity repo: [HelixOne-Mobile](https://github.com/NirajArts/HelixOne-Mobile)
 
 **@ifeelsam** - *Solana Contracts Lead*
 - 🐙 GitHub: [@ifeelsam](https://github.com/ifeelsam)
