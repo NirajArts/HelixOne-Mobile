@@ -21,7 +21,7 @@
 ### 📲 Quick Access
 **Scan QR Code to Download:**
 
-![QR Code](assets/qr_code.png)
+![QR Code](https://media.discordapp.net/attachments/1344910123813961771/1402708465226350632/qr_code.png?ex=6894e58f&is=6893940f&hm=51966d41c6c21d49d07eb15c43203d5a12e5d536d72c2e4331e692058d7a541b&=&format=webp&quality=lossless)
 
 *Compatible with Solana Mobile Stack (Saga, Seeker)*
 
